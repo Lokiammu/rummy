@@ -7,7 +7,12 @@ import WinningGuide from './components/WinningGuide';
 
 // Use environment variable for backend URL
 const BACKEND_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
-const socket = io(BACKEND_URL);
+const socket = io(BACKEND_URL, {
+  transports: ['websocket', 'polling'],
+  reconnection: true,
+  reconnectionDelay: 1000,
+  reconnectionAttempts: 5
+});
 
 function App() {
   const [gameState, setGameState] = useState('welcome'); // welcome, waiting, playing, gameOver
@@ -25,10 +30,30 @@ function App() {
   const [gameOverData, setGameOverData] = useState(null);
   const [error, setError] = useState('');
   const [showGuide, setShowGuide] = useState(false);
+  const [connectionStatus, setConnectionStatus] = useState('connecting');
 
   useEffect(() => {
+    // Socket connection status
+    socket.on('connect', () => {
+      console.log('Connected to server:', socket.id);
+      setConnectionStatus('connected');
+      setError('');
+    });
+
+    socket.on('connect_error', (err) => {
+      console.error('Connection error:', err);
+      setConnectionStatus('error');
+      setError('Unable to connect to server. Please check if backend is running.');
+    });
+
+    socket.on('disconnect', () => {
+      console.log('Disconnected from server');
+      setConnectionStatus('disconnected');
+    });
+
     // Room created
     socket.on('roomCreated', (data) => {
+      console.log('Room created:', data);
       setRoomCode(data.roomCode);
       setIsCreator(true);
       setPlayers([data.player]);
@@ -115,6 +140,9 @@ function App() {
     });
 
     return () => {
+      socket.off('connect');
+      socket.off('connect_error');
+      socket.off('disconnect');
       socket.off('roomCreated');
       socket.off('playerJoined');
       socket.off('gameStarted');
@@ -146,11 +174,21 @@ function App() {
   };
 
   const handleCreateRoom = (name) => {
+    if (!socket.connected) {
+      setError('Not connected to server. Please wait or refresh the page.');
+      return;
+    }
+    console.log('Creating room for:', name);
     setPlayerName(name);
     socket.emit('createRoom', name);
   };
 
   const handleJoinRoom = (name, code) => {
+    if (!socket.connected) {
+      setError('Not connected to server. Please wait or refresh the page.');
+      return;
+    }
+    console.log('Joining room:', code, 'as:', name);
     setPlayerName(name);
     socket.emit('joinRoom', { roomCode: code, playerName: name });
   };
@@ -202,6 +240,7 @@ function App() {
         <WelcomeScreen
           onCreateRoom={handleCreateRoom}
           onJoinRoom={handleJoinRoom}
+          connectionStatus={connectionStatus}
         />
       )}
 

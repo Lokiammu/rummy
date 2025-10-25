@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './WelcomeScreen.css';
 
-function WelcomeScreen({ onCreateRoom, onJoinRoom }) {
+function WelcomeScreen({ onCreateRoom, onJoinRoom, connectionStatus }) {
   const [playerName, setPlayerName] = useState('');
   const [roomCode, setRoomCode] = useState('');
   const [mode, setMode] = useState(null); // null, 'create', 'join'
@@ -30,6 +30,14 @@ function WelcomeScreen({ onCreateRoom, onJoinRoom }) {
         <div className="welcome-header">
           <h1 className="game-title">Indian Rummy</h1>
           <p className="game-subtitle">13 Cards • 2 Players</p>
+          {connectionStatus && (
+            <div className={`connection-status ${connectionStatus}`}>
+              {connectionStatus === 'connected' && '🟢 Connected'}
+              {connectionStatus === 'connecting' && '🟡 Connecting...'}
+              {connectionStatus === 'disconnected' && '🔴 Disconnected'}
+              {connectionStatus === 'error' && '🔴 Connection Error'}
+            </div>
+          )}
         </div>
 
         {!mode ? (
