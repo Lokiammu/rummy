@@ -1,0 +1,393 @@
+.game-board {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  position: relative;
+}
+
+/* Header */
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.room-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.room-code {
+  background: white;
+  color: #0f766e;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.guide-btn {
+  background: #f59e0b;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 2px 10px rgba(245, 158, 11, 0.3);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.guide-btn:hover {
+  background: #d97706;
+  transform: translateY(-2px);
+}
+
+.turn-indicator {
+  background: white;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-weight: 700;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.your-turn {
+  color: #10b981;
+  animation: blink 1.5s infinite;
+}
+
+.opponent-turn {
+  color: #6b7280;
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* Opponent Area */
+.opponent-area {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px 0;
+  min-height: 120px;
+}
+
+.opponent-info {
+  text-align: center;
+}
+
+.opponent-name {
+  color: white;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.opponent-cards {
+  display: flex;
+  gap: -20px;
+  justify-content: center;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.opponent-card-back {
+  width: 50px;
+  height: 70px;
+  background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+  border: 2px solid white;
+  border-radius: 6px;
+  margin: 0 -15px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.opponent-card-back:after {
+  content: "🂠";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 30px;
+  color: white;
+  opacity: 0.5;
+}
+
+.opponent-card-count {
+  color: white;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+/* Middle Area */
+.middle-area {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.deck-container {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+}
+
+.draw-pile,
+.discard-pile {
+  background: white;
+  border: 3px solid #e5e7eb;
+  border-radius: 15px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.3s;
+  min-width: 120px;
+  text-align: center;
+}
+
+.draw-pile:not(:disabled):hover,
+.discard-pile:not(:disabled):hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  border-color: #0f766e;
+}
+
+.draw-pile:disabled,
+.discard-pile:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.deck-icon {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.deck-label,
+.pile-label {
+  color: #374151;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-top: 10px;
+}
+
+.discard-pile-container {
+  position: relative;
+}
+
+.discard-pile.empty {
+  background: #f3f4f6;
+  color: #9ca3af;
+  cursor: default;
+  min-height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.empty-label {
+  font-weight: 600;
+}
+
+/* Player Area */
+.player-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.player-info {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.player-name {
+  color: white;
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.action-hint {
+  color: #fbbf24;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-top: 5px;
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.player-hand {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  max-width: 100%;
+  padding: 0 10px;
+}
+
+.card-wrapper {
+  transition: all 0.3s;
+  cursor: default;
+}
+
+.card-wrapper.clickable {
+  cursor: pointer;
+}
+
+.card-wrapper.clickable:hover {
+  transform: translateY(-15px);
+}
+
+.card-wrapper.selected {
+  transform: translateY(-20px);
+}
+
+.card-wrapper.selected .playing-card {
+  box-shadow: 0 0 0 3px #fbbf24, 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Player Actions */
+.player-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.instruction {
+  color: white;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+}
+
+.declare-btn {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: white;
+  border: none;
+  padding: 15px 40px;
+  border-radius: 25px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 20px rgba(245, 158, 11, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.declare-btn:not(:disabled):hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 6px 25px rgba(245, 158, 11, 0.5);
+}
+
+.declare-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.declare-btn:active {
+  transform: translateY(0);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .game-board {
+    padding: 10px;
+  }
+
+  .deck-container {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .player-hand {
+    gap: 5px;
+  }
+
+  .card-wrapper.clickable:hover {
+    transform: translateY(-10px);
+  }
+
+  .opponent-card-back {
+    width: 40px;
+    height: 60px;
+    margin: 0 -12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .game-header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .room-code {
+    font-size: 0.85rem;
+    padding: 6px 15px;
+  }
+
+  .guide-btn {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+  }
+
+  .player-hand {
+    gap: 3px;
+  }
+
+  .opponent-card-back {
+    width: 35px;
+    height: 50px;
+    margin: 0 -10px;
+  }
+
+  .opponent-card-back:after {
+    font-size: 20px;
+  }
+
+  .declare-btn {
+    padding: 12px 30px;
+    font-size: 1rem;
+  }
+}
