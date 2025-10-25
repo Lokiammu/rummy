@@ -18,7 +18,6 @@ function App() {
   const [hand, setHand] = useState([]);
   const [discardPile, setDiscardPile] = useState([]);
   const [opponentCardCount, setOpponentCardCount] = useState(13);
-  const [currentTurn, setCurrentTurn] = useState(null);
   const [isMyTurn, setIsMyTurn] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
   const [hasDrawn, setHasDrawn] = useState(false);
@@ -51,7 +50,6 @@ function App() {
       setDiscardPile(data.discardPile);
       setOpponentCardCount(data.opponentCardCount);
       setIsMyTurn(data.isYourTurn);
-      setCurrentTurn(data.currentTurn);
       setPlayers(data.players);
       setWinningSteps(data.winningSteps);
       setGameState('playing');
@@ -138,7 +136,6 @@ function App() {
     setHand([]);
     setDiscardPile([]);
     setOpponentCardCount(13);
-    setCurrentTurn(null);
     setIsMyTurn(false);
     setSelectedCard(null);
     setHasDrawn(false);
