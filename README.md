@@ -1,17 +1,13 @@
-# Indian Rummy 13 Cards Game
+# 🎮 Indian Rummy 13 Cards Game
 
-A real-time multiplayer Indian Rummy game with room-based gameplay.
+A real-time multiplayer Indian Rummy game with room-based gameplay. **Deployment-ready** for Vercel + Railway!
 
-## Features
-- Create and join rooms with unique room codes
-- Real-time gameplay using WebSocket
-- Perfect shuffling algorithm
-- Responsive UI for web and mobile
-- Indian Rummy rules (13 cards, sequences, and sets)
-- Room creator gets winning advantage with step-by-step guidance
+## ⚡ Quick Start
 
-## Installation
+### 🚀 Deploy to Production (5 minutes)
+See **[ONE_CLICK_DEPLOY.md](ONE_CLICK_DEPLOY.md)** for instant deployment guide!
 
+### 💻 Local Development
 ```bash
 # Install all dependencies
 npm run install-all
@@ -23,6 +19,15 @@ npm run dev
 npm run server  # Start backend server on port 3001
 npm run client  # Start frontend on port 3000
 ```
+
+## 🎯 Features
+- ✅ Create and join rooms with unique room codes
+- ✅ Real-time gameplay using WebSocket
+- ✅ Perfect shuffling algorithm (rigged for room creator)
+- ✅ Responsive UI for web and mobile
+- ✅ Indian Rummy rules (13 cards, sequences, and sets)
+- ✅ Room creator gets winning advantage with step-by-step guidance
+- ✅ Auto-deploy from GitHub to Vercel + Railway
 
 ## How to Play
 
