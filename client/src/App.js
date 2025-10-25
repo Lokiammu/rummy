@@ -5,7 +5,9 @@ import WelcomeScreen from './components/WelcomeScreen';
 import GameBoard from './components/GameBoard';
 import WinningGuide from './components/WinningGuide';
 
-const socket = io('http://localhost:3001');
+// Use environment variable for backend URL
+const BACKEND_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+const socket = io(BACKEND_URL);
 
 function App() {
   const [gameState, setGameState] = useState('welcome'); // welcome, waiting, playing, gameOver

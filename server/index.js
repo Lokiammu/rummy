@@ -2,20 +2,39 @@ const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
 const cors = require('cors');
+const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 const { createDeck, riggedShuffle, dealCards, checkWinningHand, getWinningSteps } = require('./gameLogic');
 
 const app = express();
 const server = http.createServer(app);
+
+// Environment variables
+const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:3000';
+const NODE_ENV = process.env.NODE_ENV || 'development';
+
 const io = socketIo(server, {
   cors: {
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST"]
+    origin: CLIENT_URL,
+    methods: ["GET", "POST"],
+    credentials: true
   }
 });
 
-app.use(cors());
+app.use(cors({
+  origin: CLIENT_URL,
+  credentials: true
+}));
 app.use(express.json());
+
+// Serve static files in production
+if (NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../client/build')));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+  });
+}
 
 // Store active rooms
 const rooms = new Map();
